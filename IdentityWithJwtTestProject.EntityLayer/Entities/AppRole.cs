@@ -9,5 +9,6 @@ namespace IdentityWithJwtTestProject.EntityLayer.Entities
 {
     public class AppRole : IdentityRole<string>
     {
+        public ICollection<AppRoleEndpoint> AppRoleEndpoints { get; set; } = new List<AppRoleEndpoint>();
     }
 }

@@ -9,17 +9,17 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationController : ControllerBase
+    public class ApplicationsController : ControllerBase
     {
         private readonly IApplicationService _applicationService;
 
-        public ApplicationController(IApplicationService applicationService)
+        public ApplicationsController(IApplicationService applicationService)
         {
             _applicationService = applicationService;
         }
 
         [HttpGet]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Application, ActionType = ActionType.Reading,
+        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Applications, ActionType = ActionType.Reading,
             Definition = "Get Authorize Definition Endpoints")]
         public IActionResult GetAuthorizeDefinitionEndpoints()
         {

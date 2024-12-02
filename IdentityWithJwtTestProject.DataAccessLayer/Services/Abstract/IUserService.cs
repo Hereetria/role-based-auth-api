@@ -12,8 +12,12 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract
 {
     public interface IUserService
     {
+        Task<List<ResultUsersDto>> GetUsersAsync();
         Task<SignUpUserResponse> SignUpAsync(SignUpUserDto createDto);
         Task UpdateRefreshToken(string refreshToken, AppUser user,
             DateTime accessTokenDate, int addOnAccessTokenDate);
+
+        Task AssignRoleToUserAsync(AssignRoleToUserDto assignRoleDto);
+        Task<bool> HasRolePermissionToEndpointAsync(HasRolePermissionToEndpointDto hasRolePermissionDto);
     }
 }

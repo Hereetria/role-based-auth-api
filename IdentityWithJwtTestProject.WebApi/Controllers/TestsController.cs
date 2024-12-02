@@ -7,7 +7,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class TestController : ControllerBase
+    public class TestsController : ControllerBase
     {
         [HttpGet]
         public IActionResult GetTest()

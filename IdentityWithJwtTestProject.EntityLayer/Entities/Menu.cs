@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace IdentityWithJwtTestProject.EntityLayer.Entities
 {
-    public class Product
+    public class Menu
     {
-        public string ProductId { get; set; }
+        public string MenuId {  get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public int Count { get; set; }
+        public ICollection<Endpoint> Endpoints { get; set; } = new List<Endpoint>();
 
-        public Product()
+        public Menu()
         {
-            ProductId = Guid.NewGuid().ToString();
+            MenuId = Guid.NewGuid().ToString();
         }
     }
 }

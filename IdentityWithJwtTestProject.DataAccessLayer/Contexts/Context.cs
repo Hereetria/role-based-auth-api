@@ -16,5 +16,8 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Contexts
         }
     
         public DbSet<Product> Products { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<Endpoint> Endpoints { get; set; }
+        public DbSet<AppRoleEndpoint> AppRoleEndpoints { get; set; }
     }    
 }

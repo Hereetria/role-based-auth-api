@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentityWithJwtTestProject.DataAccessLayer.Datas
+namespace IdentityWithJwtTestProject.DtoLayer.Dtos.RoleDtos
 {
-    public class Menu
+    public class ResultRoleByIdDto
     {
+        public string Id { get; set; }
         public string Name { get; set; }
-        public List<Action> Actions { get; set; }
-
     }
 }

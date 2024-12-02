@@ -4,6 +4,7 @@ using IdentityWithJwtTestProject.DataAccessLayer.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241202091359_mig3")]
+    partial class mig3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,6 +28,10 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
             modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.AppRole", b =>
                 {
                     b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AppRoleEndpointId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -41,6 +48,8 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppRoleEndpointId");
+
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
@@ -56,17 +65,13 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
 
                     b.Property<string>("AppRoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EndpointId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppRoleEndpointId");
-
-                    b.HasIndex("AppRoleId");
-
-                    b.HasIndex("EndpointId");
 
                     b.ToTable("AppRoleEndpoints");
                 });
@@ -163,6 +168,10 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AppRoleEndpointId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -180,6 +189,8 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
 
                     b.HasKey("EndpointId");
 
+                    b.HasIndex("AppRoleEndpointId");
+
                     b.HasIndex("MenuId");
 
                     b.ToTable("Endpoints");
@@ -196,7 +207,7 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
 
                     b.HasKey("MenuId");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Menu");
                 });
 
             modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.Product", b =>
@@ -326,30 +337,30 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.AppRoleEndpoint", b =>
+            modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.AppRole", b =>
                 {
-                    b.HasOne("IdentityWithJwtTestProject.EntityLayer.Entities.AppRole", "AppRole")
-                        .WithMany("AppRoleEndpoints")
-                        .HasForeignKey("AppRoleId")
+                    b.HasOne("IdentityWithJwtTestProject.EntityLayer.Entities.AppRoleEndpoint", "AppRoleEndpoint")
+                        .WithMany("AppRoles")
+                        .HasForeignKey("AppRoleEndpointId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IdentityWithJwtTestProject.EntityLayer.Entities.Endpoint", "Endpoint")
-                        .WithMany("AppRoleEndpoints")
-                        .HasForeignKey("EndpointId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppRole");
-
-                    b.Navigation("Endpoint");
+                    b.Navigation("AppRoleEndpoint");
                 });
 
             modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.Endpoint", b =>
                 {
+                    b.HasOne("IdentityWithJwtTestProject.EntityLayer.Entities.AppRoleEndpoint", "AppRoleEndpoint")
+                        .WithMany("Endpoints")
+                        .HasForeignKey("AppRoleEndpointId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("IdentityWithJwtTestProject.EntityLayer.Entities.Menu", "Menu")
                         .WithMany("Endpoints")
                         .HasForeignKey("MenuId");
+
+                    b.Navigation("AppRoleEndpoint");
 
                     b.Navigation("Menu");
                 });
@@ -405,14 +416,11 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.AppRole", b =>
+            modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.AppRoleEndpoint", b =>
                 {
-                    b.Navigation("AppRoleEndpoints");
-                });
+                    b.Navigation("AppRoles");
 
-            modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.Endpoint", b =>
-                {
-                    b.Navigation("AppRoleEndpoints");
+                    b.Navigation("Endpoints");
                 });
 
             modelBuilder.Entity("IdentityWithJwtTestProject.EntityLayer.Entities.Menu", b =>

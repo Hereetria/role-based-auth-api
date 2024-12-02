@@ -16,12 +16,12 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
 {
     public class ApplicationService : IApplicationService
     {
-        public List<Menu> GetAuthorizeDefinitionEndpoints(Type type)
+        public List<ActionMenu> GetAuthorizeDefinitionEndpoints(Type type)
         {
             var assembly = Assembly.GetAssembly(type);
             var controllers = assembly.GetTypes().Where(t => t.IsAssignableTo(typeof(ControllerBase)));
 
-            var menus = new List<Menu>();
+            var menus = new List<ActionMenu>();
 
             if (controllers == null || !controllers.Any())
                 throw new NullReferenceException("Controllers cannot be null or empty");
@@ -43,7 +43,7 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
                         continue;
 
                     var menu = menus.FirstOrDefault(m => m.Name == authorizeDefinitionAttribute.MenuName)
-                            ?? new Menu
+                            ?? new ActionMenu
                             {
                                 Name = authorizeDefinitionAttribute.MenuName,
                                 Actions = new List<Datas.Action>()
@@ -52,9 +52,7 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
                     if (!menus.Contains(menu))
                         menus.Add(menu);
 
-                    var actionType = Enum.TryParse<ActionType>(authorizeDefinitionAttribute.ActionType.ToString(), out var parsedActionType)
-                        ? parsedActionType
-                        : throw new ArgumentException("Invalid ActionType value");
+                    var actionType = authorizeDefinitionAttribute.ActionType.ToString();
 
                     var httpAttribute = action.GetCustomAttributes(true)
                         .OfType<HttpMethodAttribute>()

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IdentityWithJwtTestProject.DtoLayer.Dtos.ProductDtos;
+using IdentityWithJwtTestProject.DtoLayer.Dtos.RoleDtos;
 using IdentityWithJwtTestProject.DtoLayer.Dtos.UserDtos;
 using IdentityWithJwtTestProject.EntityLayer.Entities;
 using System;
@@ -19,11 +20,19 @@ namespace IdentityWithJwtTestProject.DtoLayer.GeneralMapping
             .ReverseMap();
             CreateMap<LoginUserDto, AppUser>().ReverseMap();
 
+            CreateMap<ResultRolesDto, AppRole>().ReverseMap();
+            CreateMap<ResultRoleByIdDto, AppRole>().ReverseMap();
+            CreateMap<CreateRoleDto, AppRole>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
+            .ReverseMap();
+            CreateMap<UpdateRoleDto, AppRole>().ReverseMap();
+
+            CreateMap<ResultUsersDto, AppUser>().ReverseMap();
 
             CreateMap<Product, ResultProductDto>().ReverseMap();
             CreateMap<Product, ResultProductByIdDto>().ReverseMap();
-            CreateMap<CreateProductDto, Product>().ReverseMap();
-            CreateMap<UpdateProductDto, Product>().ReverseMap();
+            CreateMap<Product, CreateProductDto>().ReverseMap();
+            CreateMap<Product, UpdateProductDto>().ReverseMap();
         }
     }
 }

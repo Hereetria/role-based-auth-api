@@ -1,4 +1,4 @@
-﻿using IdentityWithJwtTestProject.DataAccessLayer.Datas;
+﻿using IdentityWithJwtTestProject.DtoLayer.Dtos.AuthorizationDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract
 {
-    public interface IApplicationService
+    public interface IAuthorizeService
     {
-        List<ActionMenu> GetAuthorizeDefinitionEndpoints(Type type);
+        public Task AssignRoleEndpointAsync(AssignRoleEndpointDto assignRoleEndpointDto);
     }
 }
