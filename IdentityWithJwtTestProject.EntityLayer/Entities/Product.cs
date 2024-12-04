@@ -12,10 +12,5 @@ namespace IdentityWithJwtTestProject.EntityLayer.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public int Count { get; set; }
-
-        public Product()
-        {
-            ProductId = Guid.NewGuid().ToString();
-        }
     }
 }

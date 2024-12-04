@@ -9,19 +9,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 
 namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
 {
     public class AuthorizeService : IAuthorizeService
     {
         private readonly Context _context;
-        private readonly IApplicationService _applicationService;
         private readonly RoleManager<AppRole> _roleManager;
 
         public AuthorizeService(Context context, IApplicationService applicationService, RoleManager<AppRole> roleManager)
         {
             _context = context;
-            _applicationService = applicationService;
             _roleManager = roleManager;
         }
 
@@ -46,16 +45,16 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
             if (endpoint == null)
             {
                 var action = endpointDto.ActionMenus
-                    .FirstOrDefault(m => m.Name == endpointDto.Menu)
-                    ?.Actions.FirstOrDefault(e => e.Code == endpointDto.Code);
+                    .FirstOrDefault(m => m.ClassName == endpointDto.Menu)
+                    ?.Actions.FirstOrDefault(e => e
+                  .Code == endpointDto.Code);
 
                 endpoint = new()
                 {
-                    Code = action.Code,
-                    ActionType = action.ActionType,
                     HttpType = action.HttpType,
-                    Definition = action.Definition,
-                    Menu = _menu
+                    MethodName = action.MethodName,
+                    Menu = _menu,
+                    Code = action.Code
                 };
 
                 await _context.Endpoints.AddAsync(endpoint);
@@ -66,7 +65,7 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
                 endpoint.AppRoleEndpoints.Select(x => x.AppRole.Id == role.Id);
 
             var appRoles = await _roleManager.Roles
-                .Where(r => endpointDto.Roles.Contains(r.Name))
+                .Where(r => endpointDto.RoleIds.Contains(r.Id))
                 .ToListAsync();
 
             appRoles.ForEach(role =>
@@ -80,5 +79,28 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<AppRoleEndpoint>> GetAllRoleEndpointAsync()
+        {
+            var values = await _context.AppRoleEndpoints.ToListAsync();
+            return values != null
+                ? values
+                : new List<AppRoleEndpoint>();
+        }
+
+        public async Task DeleteRoleEndpointAsync(string roleEndpointId)
+        {
+            var roleEndpoint = await _context.AppRoleEndpoints
+                .FirstOrDefaultAsync(x => x.AppRoleEndpointId == roleEndpointId); 
+
+            if (roleEndpoint == null)
+            {
+                throw new InvalidOperationException("RoleEndpoint not found.");
+            }
+
+            _context.AppRoleEndpoints.Remove(roleEndpoint);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

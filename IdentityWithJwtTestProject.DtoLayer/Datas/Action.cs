@@ -1,5 +1,4 @@
-﻿using IdentityWithJwtTestProject.DataAccessLayer.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +8,8 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Datas
 {
     public class Action
     {
-        public string ActionType { get; set; }
         public string HttpType { get; set; }
-        public string Definition { get; set; }
+        public string MethodName { get; set; }
         public string Code { get; set; }
     }
 }

@@ -2,8 +2,7 @@
 using IdentityWithJwtTestProject.DtoLayer.Dtos.UserDtos;
 using IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract;
 using IdentityWithJwtTestProject.DataAccessLayer.Attributes;
-using IdentityWithJwtTestProject.DataAccessLayer.Datas;
-using IdentityWithJwtTestProject.DataAccessLayer.Enums;
+using IdentityWithJwtTestProject.WebApi.Controllers;
 
 namespace userWithJwtTestProject.WebApi.Controllers
 {
@@ -18,8 +17,7 @@ namespace userWithJwtTestProject.WebApi.Controllers
             _userService = userService;
         }
         [HttpGet]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Users,
-            ActionType = ActionType.Reading, Definition = "Get Users")]
+        [AuthorizeDefinition(ControllerName = nameof(UsersController), MethodName = nameof(GetUsers))]
         public async Task<IActionResult> GetUsers()
         {
             var values = await _userService.GetUsersAsync();
@@ -36,12 +34,20 @@ namespace userWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpPost("AssignRoleToUser")]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Users,
-            ActionType = ActionType.Writing, Definition = "Assign Role To User")]
+        [AuthorizeDefinition(ControllerName = nameof(UsersController), MethodName = nameof(AssignRoleToUserAsync))]
         public async Task<IActionResult> AssignRoleToUserAsync(AssignRoleToUserDto assignRoleDto)
         {
             await _userService.AssignRoleToUserAsync(assignRoleDto);
             return Ok();
+        }
+
+        [HttpPost("HasRolepermissionToEndpoint")]
+        public async Task<IActionResult> HasRolePermissionToEndpoint(HasRolePermissionToEndpointDto hasRolePermissionDto)
+        {
+            var result = await _userService.HasRolePermissionToEndpointAsync(hasRolePermissionDto);
+            return result == true
+                ? Ok()
+                : BadRequest();
         }
     }
 }

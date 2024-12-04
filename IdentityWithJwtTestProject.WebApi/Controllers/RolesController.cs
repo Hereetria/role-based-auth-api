@@ -1,6 +1,4 @@
 ﻿using IdentityWithJwtTestProject.DataAccessLayer.Attributes;
-using IdentityWithJwtTestProject.DataAccessLayer.Datas;
-using IdentityWithJwtTestProject.DataAccessLayer.Enums;
 using IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract;
 using IdentityWithJwtTestProject.DtoLayer.Dtos.RoleDtos;
 using Microsoft.AspNetCore.Http;
@@ -20,8 +18,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpGet]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Roles,
-            ActionType = ActionType.Reading, Definition = "Get Role")]
+        [AuthorizeDefinition(ControllerName = nameof(RolesController), MethodName = nameof(GetRoles))]
         public async Task<IActionResult> GetRoles()
         {
             var roles = await _roleService.GetRolesAsync();
@@ -31,8 +28,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Roles,
-            ActionType = ActionType.ReadingById, Definition = "Get Role By Id")]
+        [AuthorizeDefinition(ControllerName = nameof(RolesController), MethodName = nameof(GetRoleById))]
         public async Task<IActionResult> GetRoleById(string id)
         {
             var role = await _roleService.GetRoleByIdAsync(id);
@@ -42,8 +38,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpPost]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Roles,
-            ActionType = ActionType.Writing, Definition = "Create Role")]
+        [AuthorizeDefinition(ControllerName = nameof(RolesController), MethodName = nameof(CreateRole))]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleDto createDto)
         {
             var result = await _roleService.CreateRoleAsync(createDto);
@@ -53,8 +48,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpPut]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Roles,
-            ActionType = ActionType.Updating, Definition = "Update Role")]
+        [AuthorizeDefinition(ControllerName = nameof(RolesController), MethodName = nameof(UpdateRole))]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleDto updateDto)
         {
             var result = await _roleService.UpdateRoleAsync(updateDto);
@@ -64,8 +58,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Roles,
-            ActionType = ActionType.Deleting, Definition = "Delete Role")]
+        [AuthorizeDefinition(ControllerName = nameof(RolesController), MethodName = nameof(DeleteRole))]
         public async Task<IActionResult> DeleteRole(string id)
         {
             var result = await _roleService.DeleteRoleAsync(id);

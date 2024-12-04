@@ -10,9 +10,10 @@ namespace IdentityWithJwtTestProject.DtoLayer.Dtos.AuthorizationDtos
 {
     public class AssignRoleEndpointDto
     {
-        public ICollection<string> Roles { get; set; } = new List<string>();
+        public ICollection<string> RoleIds { get; set; } = new List<string>();
         public string Menu { get; set; }
         public string Code { get; set; }
-        public List<ActionMenu> ActionMenus { get; set; }
+
+        public List<ActionMenu> ActionMenus { get; set;}
     }
 }

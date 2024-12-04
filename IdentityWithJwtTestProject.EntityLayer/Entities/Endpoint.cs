@@ -9,9 +9,8 @@ namespace IdentityWithJwtTestProject.EntityLayer.Entities
     public class Endpoint
     {
         public string EndpointId { get; set; }
-        public string ActionType { get; set; }
         public string HttpType { get; set; }
-        public string Definition { get; set; }
+        public string MethodName { get; set; }
         public string Code { get; set; }
 
         public Menu Menu { get; set; }

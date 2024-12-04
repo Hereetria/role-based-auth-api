@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentityWithJwtTestProject.DataAccessLayer.Factories.Concrete
+namespace IdentityWithJwtTestProject.DataAccessLayer.Factories
 {
     internal class ValidationResponseFactory
     {

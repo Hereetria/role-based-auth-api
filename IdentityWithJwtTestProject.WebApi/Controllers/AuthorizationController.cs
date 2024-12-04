@@ -17,6 +17,12 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
             _authorizationService = authorizationService;
             _applicationService = applicationService;
         }
+        [HttpGet]
+        public async Task<IActionResult> GetRoleEndpoints()
+        {
+            var values = await _authorizationService.GetAllRoleEndpointAsync();
+            return Ok(values);
+        }
 
         [HttpPost]
         public async Task<IActionResult> AssignRoleEndpoint(AssignRoleEndpointDto endpointDto)
@@ -25,5 +31,14 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
             await _authorizationService.AssignRoleEndpointAsync(endpointDto);
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> AssignRoleEndpoint(string roleEndpointId)
+        {
+            await _authorizationService.DeleteRoleEndpointAsync(roleEndpointId);
+            return Ok();
+        }
+
+        
     }
 }

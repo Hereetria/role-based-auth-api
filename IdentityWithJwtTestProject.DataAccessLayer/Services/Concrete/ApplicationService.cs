@@ -1,6 +1,5 @@
 ﻿using IdentityWithJwtTestProject.DataAccessLayer.Attributes;
 using IdentityWithJwtTestProject.DataAccessLayer.Datas;
-using IdentityWithJwtTestProject.DataAccessLayer.Enums;
 using IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,17 +41,22 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
                     if (authorizeDefinitionAttribute == null)
                         continue;
 
-                    var menu = menus.FirstOrDefault(m => m.Name == authorizeDefinitionAttribute.MenuName)
-                            ?? new ActionMenu
-                            {
-                                Name = authorizeDefinitionAttribute.MenuName,
-                                Actions = new List<Datas.Action>()
-                            };
+                    var className = authorizeDefinitionAttribute.ControllerName.Replace("Controller", "");
+
+                    var menu = menus.FirstOrDefault(m => m.ClassName == className);
+                    if (menu == null)
+                    {
+                        menu = new ActionMenu
+                        {
+                            ClassName = className,
+                            Actions = new List<Datas.Action>()
+                        };
+                        menus.Add(menu);
+                    }
+
 
                     if (!menus.Contains(menu))
                         menus.Add(menu);
-
-                    var actionType = authorizeDefinitionAttribute.ActionType.ToString();
 
                     var httpAttribute = action.GetCustomAttributes(true)
                         .OfType<HttpMethodAttribute>()
@@ -62,10 +66,9 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
 
                     var _action = new Datas.Action
                     {
-                        ActionType = actionType,
-                        Definition = authorizeDefinitionAttribute.Definition,
                         HttpType = httpType,
-                        Code = $"{httpType}.{actionType}.{authorizeDefinitionAttribute.Definition.Replace(" ", "")}"
+                        MethodName = authorizeDefinitionAttribute.MethodName,
+                        Code = $"{className}.{httpType}.{authorizeDefinitionAttribute.MethodName}"
                     };
 
                     menu.Actions.Add(_action);
@@ -74,6 +77,5 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
 
             return menus;
         }
-
     }
 }

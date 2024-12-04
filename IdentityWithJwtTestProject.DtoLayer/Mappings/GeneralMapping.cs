@@ -29,10 +29,12 @@ namespace IdentityWithJwtTestProject.DtoLayer.GeneralMapping
 
             CreateMap<ResultUsersDto, AppUser>().ReverseMap();
 
-            CreateMap<Product, ResultProductDto>().ReverseMap();
-            CreateMap<Product, ResultProductByIdDto>().ReverseMap();
-            CreateMap<Product, CreateProductDto>().ReverseMap();
-            CreateMap<Product, UpdateProductDto>().ReverseMap();
+            CreateMap<ResultProductDto, Product>().ReverseMap();
+            CreateMap<ResultProductByIdDto, Product>().ReverseMap();
+            CreateMap<CreateProductDto, Product>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
+            .ReverseMap();
+            CreateMap<UpdateProductDto, Product>().ReverseMap();
         }
     }
 }

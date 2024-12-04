@@ -1,13 +1,13 @@
 ﻿using IdentityWithJwtTestProject.DataAccessLayer.Attributes;
-using IdentityWithJwtTestProject.DataAccessLayer.Datas;
-using IdentityWithJwtTestProject.DataAccessLayer.Enums;
 using IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract;
 using IdentityWithJwtTestProject.DtoLayer.Dtos.ProductDtos;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using userWithJwtTestProject.WebApi.Controllers;
 
 namespace IdentityWithJwtTestProject.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -21,8 +21,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpGet]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Products,
-            ActionType = ActionType.Reading, Definition = "Get Product")]
+        [AuthorizeDefinition(ControllerName = nameof(ProductsController), MethodName = nameof(GetProducts))]
         public async Task<ActionResult<List<ResultProductDto>>> GetProducts()
         {
             var values = await _productService.GetProductsAsync();
@@ -30,17 +29,15 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Products,
-            ActionType = ActionType.ReadingById, Definition = "Get Product By Id")]
-        public async Task<ActionResult<ResultProductByIdDto>> GetProductById(int id)
+        [AuthorizeDefinition(ControllerName = nameof(ProductsController), MethodName = nameof(GetProductById))]
+        public async Task<ActionResult<ResultProductByIdDto>> GetProductById(string id)
         {
             var values = await _productService.GetProductByIdAsync(id);
             return Ok(values);
         }
 
         [HttpPost]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Products,
-            ActionType = ActionType.Writing, Definition = "Create Product")]
+        [AuthorizeDefinition(ControllerName = nameof(ProductsController), MethodName = nameof(CreateProduct))]
         public async Task<ActionResult> CreateProduct([FromBody] CreateProductDto createDto)
         {
             await _productService.CreateProductAsync(createDto);
@@ -48,8 +45,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpPut]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Products,
-            ActionType = ActionType.Updating, Definition = "Update Product")]
+        [AuthorizeDefinition(ControllerName = nameof(ProductsController), MethodName = nameof(UpdateProduct))]
         public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductDto updateDto)
         {
             await _productService.UpdateProductAsync(updateDto);
@@ -57,9 +53,8 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Products,
-            ActionType = ActionType.Deleting, Definition = "Delete Product")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        [AuthorizeDefinition(ControllerName = nameof(ProductsController), MethodName = nameof(DeleteProduct))]
+        public async Task<ActionResult> DeleteProduct(string id)
         {
             await _productService.DeleteProductAsync(id);
             return Ok();

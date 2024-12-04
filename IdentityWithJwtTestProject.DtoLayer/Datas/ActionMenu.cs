@@ -8,7 +8,7 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Datas
 {
     public class ActionMenu
     {
-        public string Name { get; set; }
+        public string ClassName { get; set; }
         public List<Action> Actions { get; set; }
 
     }

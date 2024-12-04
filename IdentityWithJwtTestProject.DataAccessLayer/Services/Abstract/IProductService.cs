@@ -10,9 +10,9 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract
     public interface IProductService
     {
         Task<List<ResultProductDto>> GetProductsAsync();
-        Task<ResultProductByIdDto> GetProductByIdAsync(int id);
+        Task<ResultProductByIdDto> GetProductByIdAsync(string id);
         Task CreateProductAsync(CreateProductDto createDto);
         Task UpdateProductAsync(UpdateProductDto updateDto);
-        Task DeleteProductAsync(int id);
+        Task DeleteProductAsync(string id);
     }
 }

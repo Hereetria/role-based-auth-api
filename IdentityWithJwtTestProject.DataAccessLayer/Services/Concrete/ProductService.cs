@@ -27,10 +27,11 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
         public async Task<List<ResultProductDto>> GetProductsAsync()
         {
             var products = await _context.Products.ToListAsync();
-            return _mapper.Map<List<ResultProductDto>>(products);
+            var result = _mapper.Map<List<ResultProductDto>>(products);
+            return result;
         }
 
-        public async Task<ResultProductByIdDto> GetProductByIdAsync(int id)
+        public async Task<ResultProductByIdDto> GetProductByIdAsync(string id)
         {
             var product = await _context.Products.FindAsync(id);
             if (product == null)
@@ -56,7 +57,7 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteProductAsync(int id)
+        public async Task DeleteProductAsync(string id)
         {
             var product = await _context.Products.FindAsync(id);
             if (product == null)

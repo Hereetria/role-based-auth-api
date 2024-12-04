@@ -33,7 +33,8 @@ namespace IdentityWithJwtTestProject.WebApi.Middlewares
                 var httpAttribute = descriptor.MethodInfo.GetCustomAttribute(
                     typeof(HttpMethodAttribute)) as HttpMethodAttribute;
 
-                var code = $"{(httpAttribute != null ? httpAttribute.HttpMethods.First() : HttpMethods.Get)}.{attribute.ActionType}.{attribute.Definition.Replace(" ", "")}";
+                var controllerName = attribute.ControllerName.Replace("Controler", "");
+                var code = $"{controllerName}.{(httpAttribute != null ? httpAttribute.HttpMethods.First() : HttpMethods.Get)}.{attribute.MethodName}";
 
                 var hasRole = await _userService.HasRolePermissionToEndpointAsync(
                     new HasRolePermissionToEndpointDto { Name = name, Code = code });

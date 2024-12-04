@@ -75,11 +75,9 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
             }
         }
 
-        public async Task<List<string>> GetRolesToUserAsync(string userIdOrName)
+        public async Task<List<string>> GetRolesToUserAsync(string userId)
         {
-            AppUser? user = await _userManager.FindByIdAsync(userIdOrName);
-            if (user == null) 
-                user = await _userManager.FindByNameAsync(userIdOrName);
+            AppUser? user = await _userManager.FindByIdAsync(userId);
 
             if (user != null)
             {
@@ -91,7 +89,14 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
 
         public async Task<bool> HasRolePermissionToEndpointAsync(HasRolePermissionToEndpointDto hasRolePermissionDto)
         {
-            var userRoles = await GetRolesToUserAsync(hasRolePermissionDto.Name);
+            var userId = _userManager.Users
+                .Where(x => x.UserName == hasRolePermissionDto.Name)
+                .Select(x => x.Id)
+                .FirstOrDefault();
+            if (userId == null)
+                throw new ArgumentNullException();
+
+            var userRoles = await GetRolesToUserAsync(userId);
             if (!userRoles.Any())
                 return false;
 
@@ -103,7 +108,6 @@ namespace IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete
             if (endpoint == null)
                 return false;
 
-            var hasRole = false;
             var endpointRoles = endpoint.AppRoleEndpoints.Select(r => r.AppRole.Name);
 
             foreach (var userRole in userRoles)

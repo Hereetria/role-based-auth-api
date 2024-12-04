@@ -3,6 +3,7 @@ using IdentityWithJwtTestProject.DataAccessLayer.Contexts;
 using IdentityWithJwtTestProject.DataAccessLayer.Security;
 using IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract;
 using IdentityWithJwtTestProject.DataAccessLayer.Services.Concrete;
+using IdentityWithJwtTestProject.DataAccessLayer.Utilities;
 using IdentityWithJwtTestProject.DataAccessLayer.Validations.UserValidations;
 using IdentityWithJwtTestProject.DataAccessLayer.Validations.ValidationServices;
 using IdentityWithJwtTestProject.DtoLayer.Dtos.UserDtos;
@@ -46,8 +47,10 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
+var connectionStringName = ConnectionStringProvider.LaptopConnectionString;
+
 builder.Services.AddDbContext<Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(connectionStringName)));
 
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<Context>();

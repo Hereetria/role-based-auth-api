@@ -1,6 +1,4 @@
 ﻿using IdentityWithJwtTestProject.DataAccessLayer.Attributes;
-using IdentityWithJwtTestProject.DataAccessLayer.Datas;
-using IdentityWithJwtTestProject.DataAccessLayer.Enums;
 using IdentityWithJwtTestProject.DataAccessLayer.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,8 +17,7 @@ namespace IdentityWithJwtTestProject.WebApi.Controllers
         }
 
         [HttpGet]
-        [AuthorizeDefinition(MenuName = AuthorizeDefinitionMenus.Applications, ActionType = ActionType.Reading,
-            Definition = "Get Authorize Definition Endpoints")]
+        [AuthorizeDefinition(ControllerName = nameof(ApplicationsController), MethodName = nameof(GetAuthorizeDefinitionEndpoints))]
         public IActionResult GetAuthorizeDefinitionEndpoints()
         {
             var datas = _applicationService.GetAuthorizeDefinitionEndpoints(typeof(Program));
