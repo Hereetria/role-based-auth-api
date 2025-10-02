@@ -1,31 +1,82 @@
-# IdentityWithJwtTestProject
+# 🔐 Identity with JWT Test Project — ASP.NET Core Authentication & Authorization
 
-## Description
+<br>
 
-This project manages user authentication and authorization using **ASP.NET Identity Library** and **JSON Web Token (JWT)**. Authentication rules are implemented through JWT, 
-and authorization processes are defined based on custom attributes and the roles provided by the Identity Library.
+[![Report Bug](https://img.shields.io/badge/🐛_Report_Bug-red?style=for-the-badge)](../../issues/new?labels=bug)
+[![Request Feature](https://img.shields.io/badge/✨_Request_Feature-blue?style=for-the-badge)](../../issues/new?labels=enhancement)
 
-## Features
+<br>
 
-- **User Registration**: New users can register to the system.
-- **Role Management**: Administrators can assign permissions to roles, specifying which attributes each role can access.
-- **Authorization**: Based on assigned roles, users can perform actions on the `Product` test controller.
+## 📌 Project Overview
 
-## Development Approach
+Identity with JWT Test Project demonstrates how to implement **secure user authentication and authorization** in ASP.NET Core using **ASP.NET Identity** and **JSON Web Tokens (JWT)**.  
+Custom attributes and **role-based access control** are applied to protect API endpoints and manage user permissions.  
+In this structure, **users are assigned specific roles**, and **each controller method is decorated with attributes that define which roles can access it**. This ensures that, at runtime, users without the required role are **automatically restricted** from reaching protected endpoints.
 
-The project was developed with guidance from the **Angular E-Commerce Course** by **Gencay Yıldız** an instructor on YouTube.
-The course provided valuable insights into building a secure and scalable authentication and authorization system.
+This project was developed by following the **Angular E-Commerce Course by Gencay Yıldız** on YouTube, which provided valuable guidance on building a secure and scalable system.  
+> 👉 Only the **backend** has been implemented. The **frontend part was not applied** in this project.
 
-## How It Works
+<br>
 
-1. Users register using the Identity Library.
-2. Roles and permissions are assigned by the administrator.
-3. Authorized users can interact with the `Product` controller's methods based on their roles.
+## ✨ Features
 
-## Technologies Used
+- **User Registration** — New users can register through the Identity system  
+- **Role Management** — Admins assign permissions to roles, defining accessible attributes  
+- **Role-Based Authorization** — Each method is annotated with allowed roles using attributes, and users are granted or denied access accordingly  
+- **JWT Authentication** — Token-based session handling for secure requests  
+- **Custom Attributes** — Fine-grained authorization beyond simple role checks
 
-- **ASP.NET Core Identity**
-- **JWT (JSON Web Token)**
-- **Custom Attributes for Authorization**
+<br>
+
+## 🖼️ Screenshots
+Shown below in order:  
+**1. All-Attributes**
+
+<p align="center">
+  <img src="./docs/screenshots/all-attributes.png" width="32%">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" width="32%">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" width="32%">
+</p>
 
 ---
+
+## 🧰 Tech Stack
+
+<p>
+  <img src="https://img.shields.io/badge/ASP.NET%20Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt="ASP.NET Core Badge" height="32" />
+  <img src="https://img.shields.io/badge/Identity-512BD4?style=for-the-badge&logo=auth0&logoColor=white" alt="ASP.NET Identity Badge" height="32" />
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT Badge" height="32" />
+</p>
+
+---
+
+## 📥 Installation
+
+### Prerequisites
+- .NET SDK 7.0+  
+- SQL Server (local or remote)
+
+### Setup
+```bash
+git clone [repository-url]
+cd IdentityWithJwtTestProject
+
+dotnet restore
+dotnet ef database update   # Apply migrations
+dotnet run
+```
+
+The API will be available at `https://localhost:5001` by default.  
+Register a user, assign roles through the database or API, then test authenticated endpoints with your issued JWT.
+
+---
+
+## 📜 License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+This project is licensed under the terms described in the [LICENSE](./LICENSE) file.
+
+---
+
+© 2025 Yusuf Okan Sirkeci — [Hereetria](https://github.com/Hereetria)
