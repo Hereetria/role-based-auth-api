@@ -1,4 +1,4 @@
-# 🔐 Identity with JWT Test Project — ASP.NET Core Authentication & Authorization
+# 🔐 Role Based Auth API — ASP.NET Core Authentication & Authorization
 
 <br>
 
@@ -9,7 +9,7 @@
 
 ## 📌 Project Overview
 
-Identity with JWT Test Project demonstrates how to implement **secure user authentication and authorization** in ASP.NET Core using **ASP.NET Identity** and **JSON Web Tokens (JWT)**.  
+Role Based Auth API demonstrates how to implement **secure user authentication and authorization** in ASP.NET Core using **ASP.NET Identity** and **JSON Web Tokens (JWT)**.  
 Custom attributes and **role-based access control** are applied to protect API endpoints and manage user permissions.  
 In this structure, **users are assigned specific roles**, and **each controller method is decorated with attributes that define which roles can access it**. This ensures that, at runtime, users without the required role are **automatically restricted** from reaching protected endpoints.
 
@@ -59,7 +59,7 @@ Shown below in order:
 ### Setup
 ```bash
 git clone [repository-url]
-cd IdentityWithJwtTestProject
+cd role-based-auth-api
 
 dotnet restore
 dotnet ef database update   # Apply migrations
