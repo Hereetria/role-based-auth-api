@@ -38,7 +38,7 @@ Shown below in order:
   <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" width="32%">
 </p>
 
----
+<br>
 
 ## 🧰 Tech Stack
 
@@ -48,7 +48,7 @@ Shown below in order:
   <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT Badge" height="32" />
 </p>
 
----
+<br>
 
 ## 📥 Installation
 
@@ -69,7 +69,7 @@ dotnet run
 The API will be available at `https://localhost:5001` by default.  
 Register a user, assign roles through the database or API, then test authenticated endpoints with your issued JWT.
 
----
+<br>
 
 ## 📜 License
 
